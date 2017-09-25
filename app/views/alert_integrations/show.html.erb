@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @alert_integration.name %>
+</p>
+
+
+<p>
+  <strong>Team:</strong>
+  <%= @alert_integration.team.name %>
+</p>
+
+<p>
+  <strong>Kind:</strong>
+  <%= @alert_integration.kind %>
+</p>
+
+<p>
+  <strong>Data:</strong>
+  <% @alert_integration.read_data.each do |key, value| %>
+    <%= key %>: <%= value %> <br>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_alert_integration_path(@alert_integration), class: 'btn btn-success' %> |
+<%= link_to 'Back', alert_integrations_path, class: 'btn btn-info' %>

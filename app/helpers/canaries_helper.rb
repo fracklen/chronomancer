@@ -1,0 +1,2 @@
+module CanariesHelper
+end

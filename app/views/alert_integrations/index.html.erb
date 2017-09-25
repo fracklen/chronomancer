@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Alert Integrations</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Team</th>
+      <th>Kind</th>
+      <th>Data</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @alert_integrations.each do |alert_integration| %>
+      <tr>
+        <td><%= alert_integration.name %></td>
+        <td><%= alert_integration.team.name %></td>
+        <td><%= alert_integration.kind %></td>
+        <td>
+          <% alert_integration.read_data.each do |key, value| %>
+            <%= key %>: <%= value.truncate(30) %> <br>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', alert_integration, class: 'btn btn-info' %></td>
+        <td><%= link_to 'Edit', edit_alert_integration_path(alert_integration), class: 'btn btn-success' %></td>
+        <td><%= link_to 'Destroy', alert_integration, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Alert Integration', new_alert_integration_path, class: 'btn btn-primary' %>

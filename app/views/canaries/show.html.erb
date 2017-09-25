@@ -1,0 +1,89 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @canary.name %>
+</p>
+
+<p>
+  <strong>Schedule:</strong>
+  <%= @canary.schedule %>
+</p>
+
+<p>
+  <strong>Team:</strong>
+  <%= @canary.team.name %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @canary.comment %>
+</p>
+
+<p>
+  <strong>Uuid:</strong>
+  <%= @canary.uuid %>
+</p>
+
+<p>
+  <strong>Created by:</strong>
+  <%= @canary.created_by.username %>
+</p>
+
+<p>
+  <strong>URL:</strong>
+  <%= @canary.url(request) %>
+</p>
+
+<p>
+  <strong>Next expected checkin:</strong>
+  <%= @canary.next_checkin %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_canary_path(@canary), class: 'btn btn-success' %> |
+<%= link_to 'Back', canaries_path, class: 'btn btn-warning' %>
+
+<h2>Checkins</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>User Agent</th>
+      <th>Ip</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @checkins.each do |checkin| %>
+      <tr>
+        <td><%= checkin.created_at %></td>
+        <td><%= checkin.user_agent %></td>
+        <td><%= checkin.ip %></td>
+        <td><%= checkin.message %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Alerts</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Kind</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @alerts.each do |alert| %>
+      <tr>
+        <td><%= alert.created_at %></td>
+        <td><%= alert.kind %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -1,0 +1,17 @@
+<%= simple_form_for(@canary) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :schedule, collection: Canary::SCHEDULES.map {|schedule| [schedule, schedule]}, include_blank: false %>
+    <%= f.association :team, collection: @teams.map { |team| [team.name, team.id] }, include_blank: false %>
+    <%= f.association :alert_integration, collection: @alert_integrations.map { |ai| ["#{ai.kind} - #{ai.name}", ai.id] }, include_blank: 'All' %>
+
+    <%= f.input :comment %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Save', class: 'btn btn-info' %>
+  </div>
+  <hr>
+<% end %>

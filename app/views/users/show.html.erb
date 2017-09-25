@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+</p>
+
+<% if currentuser.id == @user.id %>
+<p>
+  <strong>Api Key:</strong>
+  <%= @user.api_key %>
+</p>
+
+<p>To use API:
+<pre>
+$ curl -H 'X-Api-Key: <%= @user.api_key %>' '<%= request.base_url %>/api/canaries?name=Cronjob&schedule=EVERY_HOUR&team_id=<%= @user.teams.first.id %>&alert_integration_id=<%= @user.teams.first.alert_integrations.first.id %>'
+</pre>
+</p>
+<% end %>
+
+<%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-success' %> |
+<%= link_to 'Back', users_path, class: 'btn btn-primary' %>

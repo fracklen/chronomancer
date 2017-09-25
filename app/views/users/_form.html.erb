@@ -1,0 +1,39 @@
+<%= simple_form_for(@user) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :username, readonly: !@user.new_record? %>
+    <%= f.input :email %>
+    <%= f.input :admin %>
+  </div>
+
+<hr>
+<h2>Teams</h2>
+
+  <div class="form-inputs">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            Name
+          </th>
+        </tr>
+      </thead>
+    <% @teams.each do |team| %>
+        <tr>
+          <td>
+            <%= team.name %>
+          </td>
+          <td>
+            <input type="checkbox" name="user[team_ids][]" value="<%= team.id %>" <%= "checked" if @memberships.include?(team) %>>
+          </td>
+        </tr>
+    <% end %>
+    </table>
+  </div>
+
+  <hr>
+  <div class="form-actions">
+    <%= f.submit "Save", class: 'btn btn-primary' %>
+  </div>
+<% end %>

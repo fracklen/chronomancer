@@ -1,6 +1,6 @@
 <% if current_user %>
-<%= link_to "Logout", destroy_user_session_path, method: "delete", class: "btn btn-outline-success btn-logout" %>
+<%= link_to "Logout", destroy_user_session_path, method: "delete", class: "nav-link btn btn-outline-success btn-logout" %>
 
 <% else %>
-<%= link_to "Login", new_user_session_path, class: "btn btn-outline-success btn-login" %>
+<%= link_to "Login", user_github_omniauth_authorize_path, class: "nav-link btn btn-outline-success btn-login" %>
 <% end %>

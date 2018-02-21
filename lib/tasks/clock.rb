@@ -7,7 +7,7 @@ module Clockwork
 
 
   def self.redis
-    @redis ||= Redis.new
+    @redis ||= Redis.new(url: ENV['REDIS_URL'] || 'redis://localhost', password: ENV['REDIS_PASSWORD'])
   end
 
   def self.is_master?(clock_id)

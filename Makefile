@@ -33,4 +33,4 @@ docker-clean:
 		-p "chronomancer_$(git rev-parse --short HEAD)" \
 	    -f docker-compose-test.yml down
 
-deploy: docker_build docker-push-image
+deploy: docker-build docker-push-image

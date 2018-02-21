@@ -1,5 +1,5 @@
 class AlertIntegration < ApplicationRecord
-  KINDS = %w(Slack PagerDuty)
+  KINDS = %w(Slack PagerDuty Teams)
   has_many :canaries
 
   belongs_to :team

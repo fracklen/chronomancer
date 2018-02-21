@@ -12,6 +12,8 @@ class AlertJob < ActiveJob::Base
       notify_slack(canary, alert_integration)
     when 'PagerDuty'
       notify_pager_duty(canary, alert_integration)
+    when 'Teams'
+      notify_teams(canary, alert_integration)
     end
     Alert.create(canary: canary, kind: alert_integration.kind)
   end
@@ -22,6 +24,30 @@ class AlertJob < ActiveJob::Base
       channel: @data[:channel],
       username: @data[:username]
     notifier.ping message(canary)
+  end
+
+  def notify_teams(canary, alert_integration)
+    @data = integration_data(alert_integration)
+    payload = {
+      "@type" => "MessageCard",
+      "@context" => "http://schema.org/extensions",
+      "themeColor" => @data[:theme_color],
+      "title" => @data[:title],
+      "summary" => @data[:title],
+      "sections" => [ { "text" => message(canary) } ]
+    }
+
+    json_headers = { 'Content-Type' => 'application/json' }
+    uri = URI.parse(@data[:teams_url])
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    response = http.post(uri.path, payload.to_json, json_headers)
+
+    if response.code.to_i == 200 && response.body.to_i == 1
+      true
+    else
+      raise "An error occurred: #{response.body}"
+    end
   end
 
   def notify_pager_duty(canary, alert_integration)

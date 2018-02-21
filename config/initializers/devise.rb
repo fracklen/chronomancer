@@ -283,5 +283,15 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 
-  config.ldap_auth_username_builder = Proc.new {|attribute,username,ldap| "#{attribute}=#{username},#{ldap.base}" }
+  config.omniauth :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'],
+    {
+      :client_options => {
+        :site => "#{ENV['GITHUB_URL']}/api/v3",
+        :authorize_url => "#{ENV['GITHUB_URL']}/login/oauth/authorize",
+        :token_url => "#{ENV['GITHUB_URL']}/login/oauth/access_token",
+      },
+      scope: "read:user,read:org"
+    }
+
+  # config.ldap_auth_username_builder = Proc.new {|attribute,username,ldap| "#{attribute}=#{username},#{ldap.base}" }
 end

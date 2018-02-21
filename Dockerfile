@@ -3,7 +3,8 @@ MAINTAINER Martin Neiiendam <fracklen@gmail.com>
 # Install apt based dependencies required to run Rails as
 # well as RubyGems. As the Ruby image itself is based on a
 # Debian image, we use apt-get to install those.
-RUN apt-get update && apt-get install -y \
+RUN useradd -ms /bin/bash app && \
+  apt-get update && apt-get install -y \
   build-essential \
   supervisor \
   nodejs
@@ -24,7 +25,10 @@ RUN gem install bundler && bundle install --jobs 20 --retry 5 --without developm
 
 # Copy the main application.
 COPY . ./
-
+ENV RAILS_ENV production
+RUN bundle exec rake assets:precompile
+RUN mkdir -p /app/log && chown -R app /app
+USER app
 # Expose port 3000 to the Docker host, so we can access it
 # from the outside.
 EXPOSE 3000

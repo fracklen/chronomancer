@@ -5,7 +5,7 @@
   <%= @user.username %>
 </p>
 
-<% if currentuser.id == @user.id %>
+<% if current_user.id == @user.id %>
 <p>
   <strong>Api Key:</strong>
   <%= @user.api_key %>

@@ -19,24 +19,33 @@
 
   <body>
 
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand" href="#">Chronomancer</a>
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+      <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">Chronomancer</h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <%= render 'layouts/navigation_links' %>
+            <%= render 'layouts/navigation_search' %>
+          </nav>
+        </div>
+      </header>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-        <%= render 'layouts/navigation_links' %>
-        </ul>
-        <%= render 'layouts/navigation_search' %>
-      </div>
-    </nav>
-
-    <div class="container" id="main">
+      <main role="main" class="inner cover">
+        <div class="container" id="main">
         <%= render 'layouts/messages' %>
 
         <%= yield %>
-    </div><!-- /.container -->
+        </div><!-- /.container -->
+      </main>
+
+      <footer class="mastfoot mt-auto">
+        <div class="inner">
+
+        </div>
+      </footer>
+    </div>
+
+
+
   </body>
 </html>

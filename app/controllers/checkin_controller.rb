@@ -8,5 +8,6 @@ class CheckinController < ActionController::Base
       request.headers['HTTP_X_FORWARDED_FOR'] || request.remote_ip,
       params[:message]
     )
+    render :nothing => true, :status => 204
   end
 end

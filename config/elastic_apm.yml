@@ -1,0 +1,11 @@
+---
+server_url: 'http://localhost:8200'
+enabled_environments:
+  - development
+  - production
+service_name: chronomancer
+service_version: "1.0"
+framework_name: rails
+framework_version: "5.2"
+#debug_transactions: true
+#debug_http: true

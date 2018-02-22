@@ -26,7 +26,7 @@ RUN gem install bundler && bundle install --jobs 20 --retry 5 --without developm
 # Copy the main application.
 COPY . ./
 ENV RAILS_ENV production
-RUN bundle exec rake assets:precompile
+RUN DATABASE_URL=postgresql://127.0.0.1:5432/foo bundle exec rake assets:precompile
 RUN mkdir -p /app/log && chown -R app /app
 USER app
 # Expose port 3000 to the Docker host, so we can access it

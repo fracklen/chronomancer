@@ -19,7 +19,7 @@ test_in_docker:
 	cp config/database.docker_test.yml config/database.yml
 	scripts/wait-for-it.sh db:5432 -s -t 120 -- echo "Postgres Up and running!"
 	RAILS_ENV=test bundle exec rake db:create db:migrate
-	echo RAILS_ENV=test bundle exec rspec spec
+	RAILS_ENV=test bundle exec rspec spec
 
 docker_test_build:
 	docker build -t chronomancer_test -f Dockerfile.test .

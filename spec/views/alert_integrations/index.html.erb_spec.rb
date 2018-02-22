@@ -6,28 +6,27 @@ RSpec.describe "alert_integrations/index", type: :view do
   end
 
   before(:each) do
-    puts YAML.load(alert_data).to_yaml
     @team = Team.create(name: "Q&A")
     assign(:alert_integrations, [
       AlertIntegration.create!(
-      :team => @team,
-      :name => "Foobar",
-      :kind => "Slack",
-      :data => alert_data
+      team: @team,
+      name: "Foobar",
+      kind: "Slack",
+      data: alert_data
     ),
       AlertIntegration.create!(
-        :team => @team,
-        :name => "Foobar2",
-        :kind => "Slack",
-        :data => alert_data
+        team: @team,
+        name: "Foobar2",
+        kind: "Slack",
+        data: alert_data
       )
     ])
   end
 
   it "renders a list of alert_integrations" do
     render
-    assert_select "tr>td", :text => "Foobar", :count => 1
-    assert_select "tr>td", :text => "Foobar2", :count => 1
-    assert_select "tr>td", :text => "Slack", :count => 2
+    assert_select "tr>td", text: "Foobar", count: 1
+    assert_select "tr>td", text: "Foobar2", count: 1
+    assert_select "tr>td", text: "Slack", count: 2
   end
 end

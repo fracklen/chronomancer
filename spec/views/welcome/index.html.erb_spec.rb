@@ -1,5 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "welcome/index.html.erb", type: :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "renders attributes in <p>" do
+    render
+    expect(rendered).to match(/Welcome/)
+  end
 end

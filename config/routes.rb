@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :application_settings
   resources :authentication_providers
   namespace :api do
     resources :canaries

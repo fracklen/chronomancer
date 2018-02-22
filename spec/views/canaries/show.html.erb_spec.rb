@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "canaries/show", type: :view do
   before(:each) do
-    @user = User.create(username: "tester", email: "test@test.com", password: "testtest")
+    @user = User.create(username: "tester", email: "test@test.com")
     @team = Team.create(name: "Q&A")
     @canary = assign(:canary, Canary.create!(
       :name => "Name",

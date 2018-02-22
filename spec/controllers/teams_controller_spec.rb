@@ -18,18 +18,27 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe TeamsController, type: :controller do
-
+describe TeamsController, type: :controller do
+  # include Warden::Test::Helpers
   # This should return the minimal set of attributes required to create a valid
   # Team. As you add validations to Team, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      name: 'The A-Team'
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      name: nil
+    }
   }
+
+  before do
+    @user = User.create(username: 'Admin', email: 'foo@bar.dk', admin: true)
+    login_with @user
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -38,9 +47,11 @@ RSpec.describe TeamsController, type: :controller do
 
   describe "GET #index" do
     it "assigns all teams as @teams" do
-      team = Team.create! valid_attributes
+      @team = Team.create! valid_attributes
       get :index, params: {}, session: valid_session
-      expect(assigns(:teams)).to eq([team])
+      expect(response.status).to eq(200)
+      expect(Team.count).to eq(1)
+      expect(assigns(:teams)).to eq([@team])
     end
   end
 
@@ -103,14 +114,16 @@ RSpec.describe TeamsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          name: "New Name"
+        }
       }
 
       it "updates the requested team" do
         team = Team.create! valid_attributes
         put :update, params: {id: team.to_param, team: new_attributes}, session: valid_session
         team.reload
-        skip("Add assertions for updated state")
+        expect(team.name).to eq('New Name')
       end
 
       it "assigns the requested team as @team" do

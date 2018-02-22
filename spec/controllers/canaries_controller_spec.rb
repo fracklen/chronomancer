@@ -19,22 +19,42 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe CanariesController, type: :controller do
+  # This should return the minimal set of values that should be in the session
+  # in order to pass any filters (e.g. authentication) defined in
+  # CanariesController. Be sure to keep this updated too.
+  let(:valid_session) { {} }
+
+  before do
+    @user = User.create!(username: 'Admin A', email: 'foobar@baz.dk', admin: true)
+    @team = Team.create!(name: 'The A-Team')
+    @user.teams = [@team]
+    @user.save
+    login_with @user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Canary. As you add validations to Canary, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      name: 'Foobar',
+      schedule: 'EVERY_15_MINUTES',
+      team: @team,
+      comment: '',
+      alert_integration_id: nil,
+      created_by: @user
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      name: '',
+      schedule: nil,
+      team_id: nil,
+      comment: nil,
+      alert_integration_id: nil
+    }
   }
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # CanariesController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
 
   describe "GET #index" do
     it "assigns all canaries as @canaries" do
@@ -69,6 +89,17 @@ RSpec.describe CanariesController, type: :controller do
 
   describe "POST #create" do
     context "with valid params" do
+      let(:valid_attributes) do
+        {
+          name: 'CanCanary',
+          schedule: 'EVERY_15_MINUTES',
+          team_id: @team.id,
+          comment: '',
+          alert_integration_id: nil,
+          created_by_id: @user.id
+        }
+      end
+
       it "creates a new Canary" do
         expect {
           post :create, params: {canary: valid_attributes}, session: valid_session
@@ -77,6 +108,7 @@ RSpec.describe CanariesController, type: :controller do
 
       it "assigns a newly created canary as @canary" do
         post :create, params: {canary: valid_attributes}, session: valid_session
+        expect(assigns(:canary).errors).to be_empty
         expect(assigns(:canary)).to be_a(Canary)
         expect(assigns(:canary)).to be_persisted
       end
@@ -103,14 +135,21 @@ RSpec.describe CanariesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          name: 'Foobar',
+          schedule: 'EVERY_3_HOURS',
+          team_id: @team.id,
+          comment: '',
+          alert_integration_id: nil,
+          created_by_id: @user.id
+        }
       }
 
       it "updates the requested canary" do
         canary = Canary.create! valid_attributes
         put :update, params: {id: canary.to_param, canary: new_attributes}, session: valid_session
         canary.reload
-        skip("Add assertions for updated state")
+        expect(canary.schedule).to eq('EVERY_3_HOURS')
       end
 
       it "assigns the requested canary as @canary" do

@@ -15,7 +15,7 @@ class AlertIntegration < ApplicationRecord
   validates_presence_of :name
 
   def read_data
-    YAML.load(data)
+    YAML.load(data).symbolize_keys
   end
 
   private
@@ -27,9 +27,9 @@ class AlertIntegration < ApplicationRecord
         errors.add(:data, "Invalid yaml: #{e}")
         return
       end
-      SLACK_DEFAULTS.each do |key,value|
+      SLACK_DEFAULTS.each do |key,_|
         if self.read_data[key].blank?
-          errors.add(:data, "Data must include :#{key}")
+          errors.add(:data, "must include #{key}")
         end
       end
     end

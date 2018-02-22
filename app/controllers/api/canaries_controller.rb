@@ -19,7 +19,7 @@ class Api::CanariesController < ApiController
   end
 
   def index
-    render json: current_api_user.teams.include(:canaries)
+    render json: current_api_user.teams.includes(:canaries)
   end
 
   def destroy

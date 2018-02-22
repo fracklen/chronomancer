@@ -23,12 +23,35 @@ RSpec.describe AlertIntegrationsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # AlertIntegration. As you add validations to AlertIntegration, be sure to
   # adjust the attributes here as well.
+  let(:alert_data) do
+    "---\nwebhook_url: http://value\nchannel: foo\nusername: bar"
+  end
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      name: 'Slack Foobar',
+      kind: 'Slack',
+      team: @team,
+      data: alert_data
+    }
   }
 
+  before(:each) do
+    @user = User.create(username: "tester", email: "test@test.com")
+    @team = Team.create(name: "Q&A")
+    @user.teams = [@team]
+    @user.save
+    @team.reload
+    login_with @user
+  end
+
+
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      name: 'Barred',
+      kind: 'Slack',
+      team_id: @team.id,
+      data: ''
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -47,7 +70,7 @@ RSpec.describe AlertIntegrationsController, type: :controller do
   describe "GET #show" do
     it "assigns the requested alert_integration as @alert_integration" do
       alert_integration = AlertIntegration.create! valid_attributes
-      get :show, params: {id: alert_integration.to_param}, session: valid_session
+      get :show, params: {id: alert_integration.id}, session: valid_session
       expect(assigns(:alert_integration)).to eq(alert_integration)
     end
   end
@@ -68,7 +91,16 @@ RSpec.describe AlertIntegrationsController, type: :controller do
   end
 
   describe "POST #create" do
+    let(:valid_attributes) {
+      {
+        name: 'Slack Foobar',
+        kind: 'Slack',
+        team_id: @team.id,
+        data: alert_data
+      }
+    }
     context "with valid params" do
+
       it "creates a new AlertIntegration" do
         expect {
           post :create, params: {alert_integration: valid_attributes}, session: valid_session
@@ -103,14 +135,19 @@ RSpec.describe AlertIntegrationsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          name: 'Slack Foobar 42',
+          kind: 'Slack',
+          team_id: @team.id,
+          data: alert_data
+        }
       }
 
       it "updates the requested alert_integration" do
         alert_integration = AlertIntegration.create! valid_attributes
         put :update, params: {id: alert_integration.to_param, alert_integration: new_attributes}, session: valid_session
         alert_integration.reload
-        skip("Add assertions for updated state")
+        expect(alert_integration.name).to eq('Slack Foobar 42')
       end
 
       it "assigns the requested alert_integration as @alert_integration" do

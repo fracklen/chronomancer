@@ -64,6 +64,8 @@ group :test do
   gem 'webmock'
   gem 'rspec-sidekiq'
   gem 'rspec-activejob'
+  gem 'capybara'
+  gem 'rails-controller-testing'
 end
 
 group :development do

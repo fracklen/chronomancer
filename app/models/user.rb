@@ -21,7 +21,7 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     Rails.logger.warn("auth: #{auth.inspect}")
     Rails.logger.warn("info: #{auth.info.inspect}")
-    user = where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    user = where(username: auth.info.name).first_or_create do |user|
       user.email = auth.info.email
       #user.password = Devise.friendly_token[0,20]
       user.username = auth.info.name   # assuming the user model has a name
@@ -40,6 +40,7 @@ class User < ApplicationRecord
     client = Octokit::Client.new(access_token: token)
     client.orgs.each do |org|
       t = Team.where(name: org[:login]).first_or_create
+      next if user.teams.include?(t)
       user.teams << t
     end
   end

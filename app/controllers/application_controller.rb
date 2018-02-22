@@ -1,15 +1,15 @@
 class ApplicationController < ActionController::Base
-  # rescue_from DeviseLdapAuthenticatable::LdapException do |exception|
-  #   render :text => exception, :status => 500
-  # end
   protect_from_forgery with: :exception
-
   before_action :authenticate_user!
   before_action :set_authorizor
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
+
+  def test_stuff
+    raise "GOT HERE"
+  end
 
   def configure_permitted_parameters
     added_attrs = [:username, :email, :password, :password_confirmation, :remember_me]

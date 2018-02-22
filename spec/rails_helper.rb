@@ -7,6 +7,8 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'rspec/active_job'
 require 'vcr'
+require 'capybara/rspec'
+require_relative 'support/controller_helpers'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -64,6 +66,10 @@ RSpec.configure do |config|
     ActiveJob::Base.queue_adapter.enqueued_jobs = []
     ActiveJob::Base.queue_adapter.performed_jobs = []
   end
+
+  config.include(ControllerHelpers, type: :controller)
+  config.include(Devise::Test::ControllerHelpers, type: :controller)
+
 end
 
 VCR.configure do |config|

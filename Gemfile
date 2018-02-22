@@ -7,9 +7,9 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
+gem 'rails', '~> 5.0', '>= 5.0.0.1'
 # Use sqlite3 as the database for Active Record
-gem 'pg', '~> 0.21'
+gem 'pg', '~> 1.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 gem 'therubyracer'
@@ -20,7 +20,7 @@ gem 'bootstrap-glyphicons'
 gem 'simple_form'
 gem 'devise'
 gem 'omniauth-github'
-gem 'omniauth-oauth2'
+#gem 'omniauth-oauth2'
 gem 'omniauth'
 gem 'octokit'
 #gem 'devise_ldap_authenticatable', path: 'gems/devise_ldap_authenticatable'
@@ -44,6 +44,7 @@ gem 'salt-api'
 gem 'sentry-raven'
 gem 'clockwork'
 gem 'tether-rails'
+gem 'elastic-apm'
 
 gem 'slack-notifier'
 # Use Redis adapter to run Action Cable in production
